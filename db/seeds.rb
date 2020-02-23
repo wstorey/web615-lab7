@@ -2,7 +2,7 @@ for i in 1..100
   @article = Article.new
   @article.title = "Will #{Faker::Company.name} really #{Faker::Company.bs}?"
   paragraph_1 = Faker::Lorem.paragraphs.join(' ')
-  paragraph_2 = Faker::Lovecraft.paragraphs.join(' ')
+  paragraph_2 = Faker::Books::Lovecraft.paragraphs.join(' ')
   paragraph_3 = Faker::Hipster.paragraphs.join(' ')
   @article.content = "#{paragraph_1} <br /> #{paragraph_2} <br /> #{paragraph_3}"
   if @article.save
