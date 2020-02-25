@@ -37,6 +37,7 @@ class CommentsController < ApplicationController
   # POST /comments.json
   def create
     @comment = Comment.new(comment_params)
+    @comment.user = current_user
 
     respond_to do |format|
       if @comment.save
@@ -77,11 +78,20 @@ class CommentsController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_comment
       @comment = Comment.find(params[:id])
+    rescue ActiveRecord::RecordNotFound
+      flash[:alert] = "The comment you're looking for cannot be found"
+      respond_to do |format|
+        format.html {
+          redirect_to comments_path
+        }
+
+        format.json {render :json, status: 404}
+      end
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def comment_params
-      params.require(:comment).permit(:message, :visible, :article_id)
+      params.require(:comment).permit(:message, :visible, :user_id, :article_id)
       # Students, make sure to add the user_id and article ID parameter as symbols here ^^^^^^
     end
 end

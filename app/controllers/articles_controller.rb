@@ -36,7 +36,9 @@ class ArticlesController < ApplicationController
   # POST /articles
   # POST /articles.json
   def create
+    # params[:request][:user_id] = request.user_id
     @article = Article.new(article_params)
+    @article.user = current_user
 
     respond_to do |format|
       if @article.save
@@ -77,11 +79,20 @@ class ArticlesController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_article
       @article = Article.find(params[:id])
+    rescue ActiveRecord::RecordNotFound
+      flash[:alert] = "The article you're looking for cannot be found"
+      respond_to do |format|
+        format.html {
+          redirect_to articles_path
+        }
+
+        format.json {render :json, status: 404}
+      end
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def article_params
-      params.require(:article).permit(:title, :content, :category)
+      params.require(:article).permit(:title, :content, :category, :user_id)
       # Students, make sure to add the user_id parameter as a symbol here ^^^^^^
     end
 end
