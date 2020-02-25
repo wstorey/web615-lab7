@@ -20,6 +20,11 @@
           <strong>Category:</strong>
           <%= @article.category %>
         </p>
+
+        <p>
+          <strong>User:</strong>
+          <%= @article.user.email %>
+        </p>
       </div>
 
       <div class="panel-footer">
@@ -41,7 +46,7 @@
         <thead>
         <tr>
           <th>Comment</th>
-          <th></th>
+          <th>User</th>
         </tr>
         </thead>
 
@@ -49,6 +54,7 @@
         <% @article.comments.order(created_at: :desc).each do |comment| %>
           <tr>
             <td><%= comment.message %></td>
+            <td><%= comment.user.email %></td>
             <td><%= link_to 'Show', comment %></td>
           </tr>
         <% end %>
