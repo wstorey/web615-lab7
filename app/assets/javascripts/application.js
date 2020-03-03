@@ -16,7 +16,8 @@
 //= require bootstrap-sprockets
 //= require_tree .
 
-document.addEventListener('turbolinks;load', function(event) {
+document.addEventListener('turbolinks:load', function(event) {
+
     (function(h,o,t,j,a,r){
         h.hj=h.hj||function(){(h.hj.q=h.hj.q||[]).push(arguments)};
         h._hjSettings={hjid:1714099,hjsv:6};
